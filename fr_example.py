@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import face_recognition
 import cv2
 import numpy as np
@@ -13,9 +14,8 @@ known_face_names = list(all_face_encodings.keys())
 known_face_encodings = np.array(list(all_face_encodings.values()))
 count = 0
 prev = ''
-student = ['Dmitrii']
-st=[0]
-aas=0
+student = ['Dmitrii'] #список учеников
+aas=0 #есть ли ученик(один) в кадре или нет
 aat=0
 teacher = ['Maxim is the God']
 te=[0]
