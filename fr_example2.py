@@ -18,20 +18,16 @@ logging.basicConfig(format='%(asctime)s %(message)s', datefmt='%m/%d/%Y %I:%M:%S
 known_face_names = list(all_face_encodings.keys())
 known_face_encodings = np.array(list(all_face_encodings.values()))
 count = 0
-prev = ''
-student = ['Dmitrii']
-st=[0]
-aas=0
-aat=0
-teacher = ['Maxim is the God']
-te=[0]
+
+people = [['Dmitrii',0, 's'],['Putin',0, 's'],['Maxim is the God',0, 't'],['Alexey Navalny',0, 't']]
+
 names = []
 while True:
     ret, frame = video_capture.read()
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     faces = face_cascade.detectMultiScale(gray, 1.3, 5)
     rgb_frame = frame[:, :, ::-1]
-    if len(faces)>0:
+    if True:
         if count%2==0:
             face_locations = face_recognition.face_locations(rgb_frame)
             face_encodings = face_recognition.face_encodings(rgb_frame, face_locations)
@@ -46,6 +42,9 @@ while True:
                     name = known_face_names[best_match_index]
 
                 face_names.append(name)
+        if len(list(set(face_names)-set(prev_names)))>0:
+            raz = list(set(face_names)-set(prev_names))
+            print(raz)
         for (top, right, bottom, left), name in zip(face_locations, face_names):
         
             # Draw a box around the face
@@ -56,6 +55,7 @@ while True:
             font = cv2.FONT_HERSHEY_DUPLEX
             cv2.putText(frame, name, (left + 6, bottom - 6), font, 1.0, (255, 255, 255), 1)    
     count +=1
+    prev_names=face_names.copy()
     # Display the resulting image
     cv2.imshow('Video', frame)
 
